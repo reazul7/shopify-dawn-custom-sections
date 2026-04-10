@@ -244,7 +244,10 @@
         <div class="size-guide__header-band">
           <h2 class="size-guide__title {{ section.settings.heading_size }}">
             <span class="svg-wrapper">{{ 'icon-ruler.svg' | inline_asset_content }}</span>
-            <span>{{ resolved_store_name }} {{ section.settings.heading_label }}</span>
+            <span>
+              {{- resolved_store_name }}
+              {{ section.settings.heading_label -}}
+            </span>
             <span>-</span>
             <span data-size-guide-heading-category>{{ first_chart.settings.core_category | escape }}</span>
           </h2>
@@ -395,9 +398,7 @@
         const bodyMarkup = rows
           .map((row) => {
             const label = row[0] || '';
-            const values = headings
-              .map((_, index) => `<td>${escapeHtml(row[index + 1] || '')}</td>`)
-              .join('');
+            const values = headings.map((_, index) => `<td>${escapeHtml(row[index + 1] || '')}</td>`).join('');
 
             return `
               <tr>
@@ -453,7 +454,7 @@
           chartText: section.querySelector('[data-size-guide-chart-text]'),
           tableTitle: section.querySelector('[data-size-guide-table-title]'),
           table: section.querySelector('[data-size-guide-table]'),
-          footnote: section.querySelector('[data-size-guide-footnote]')
+          footnote: section.querySelector('[data-size-guide-footnote]'),
         };
 
         const measurementHeading = section.dataset.measurementHeading || 'Measurement Points';
@@ -462,7 +463,7 @@
           category: charts[0].category,
           subcategory: charts[0].subcategory,
           chart: charts[0].chart,
-          unit: charts[0].unit
+          unit: charts[0].unit,
         };
 
         const createButton = (label, active, onClick) => {
@@ -487,10 +488,8 @@
         };
 
         const getCategoryCharts = () => charts.filter((item) => item.category === state.category);
-        const getSubcategoryCharts = () =>
-          getCategoryCharts().filter((item) => item.subcategory === state.subcategory);
-        const getChartOptions = () =>
-          getSubcategoryCharts().filter((item) => item.chart === state.chart);
+        const getSubcategoryCharts = () => getCategoryCharts().filter((item) => item.subcategory === state.subcategory);
+        const getChartOptions = () => getSubcategoryCharts().filter((item) => item.chart === state.chart);
 
         const ensureState = () => {
           const categoryCharts = getCategoryCharts();
@@ -605,7 +604,7 @@
   "disabled_on": {
     "groups": ["header", "footer"]
   },
-  "max_blocks": 100,
+  "max_blocks": 50,
   "settings": [
     {
       "type": "color_scheme",
