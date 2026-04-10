@@ -1,0 +1,265 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner": {
+      "type": "image-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Browse our latest products",
+            "heading_size": "h0"
+          }
+        },
+        "button": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Shop all",
+            "button_link_1": "shopify://collections/all",
+            "button_style_secondary_1": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "button"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/Imm-web.webp",
+        "image_overlay_opacity": 40,
+        "image_height": "medium",
+        "image_behavior": "none",
+        "desktop_content_position": "bottom-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "scheme-3",
+        "stack_images_on_mobile": false,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    },
+    "slideshow_nd4wpk": {
+      "type": "slideshow",
+      "custom_css": [],
+      "name": "t:sections.slideshow.presets.name",
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "medium",
+        "slider_visual": "numbers",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "image_behavior": "ambient",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "best-sells",
+        "products_to_show": 16,
+        "title": "Best Selling Products",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": true,
+        "full_width": true,
+        "show_view_all": false,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
+        "padding_top": 44,
+        "padding_bottom": 36
+      }
+    },
+    "collection_list_Erc6Yj": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_WCgRqt": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "platinam"
+          }
+        },
+        "featured_collection_TEWUhn": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "sahara"
+          }
+        },
+        "featured_collection_LNcqm3": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "panjabi"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_WCgRqt",
+        "featured_collection_TEWUhn",
+        "featured_collection_LNcqm3"
+      ],
+      "name": "t:sections.collection-list.presets.name",
+      "settings": {
+        "title": "Luxurious Panjabi",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 3,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collection_list_fAxhj3": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_PxFbjp": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "jeans"
+          }
+        },
+        "featured_collection_GmTeig": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "formal-pants"
+          }
+        },
+        "featured_collection_QV73kg": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "chinos"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_PxFbjp",
+        "featured_collection_GmTeig",
+        "featured_collection_QV73kg"
+      ],
+      "name": "t:sections.collection-list.presets.name",
+      "settings": {
+        "title": "Pants Collection",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 3,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collage_WfkGJK": {
+      "type": "collage",
+      "blocks": {
+        "image_RamD7D": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/man-in-suit-bowtie.jpg"
+          }
+        },
+        "collection_NMHxYW": {
+          "type": "collection",
+          "settings": {
+            "collection": "formal"
+          }
+        },
+        "collection_pmKikJ": {
+          "type": "collection",
+          "settings": {
+            "collection": "casual"
+          }
+        }
+      },
+      "block_order": [
+        "image_RamD7D",
+        "collection_NMHxYW",
+        "collection_pmKikJ"
+      ],
+      "name": "t:sections.collage.presets.name",
+      "settings": {
+        "heading": "Luxury Shirts",
+        "heading_size": "h1",
+        "desktop_layout": "left",
+        "mobile_layout": "column",
+        "card_styles": "product-card-wrapper",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collage_CyiUKz": {
+      "type": "collage",
+      "blocks": {
+        "image_YicDFy": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/tshirts.jpg"
+          }
+        },
+        "collection_Twj8tG": {
+          "type": "collection",
+          "settings": {
+            "collection": "t-shirts"
+          }
+        },
+        "collection_7p48CF": {
+          "type": "collection",
+          "settings": {
+            "collection": "polos"
+          }
+        }
+      },
+      "block_order": [
+        "image_YicDFy",
+        "collection_Twj8tG",
+        "collection_7p48CF"
+      ],
+      "name": "t:sections.collage.presets.name",
+      "settings": {
+        "heading": "Premium T-shirt & Polos",
+        "heading_size": "h1",
+        "desktop_layout": "left",
+        "mobile_layout": "column",
+        "card_styles": "product-card-wrapper",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "image_banner",
+    "slideshow_nd4wpk",
+    "featured_collection",
+    "collection_list_Erc6Yj",
+    "collection_list_fAxhj3",
+    "collage_WfkGJK",
+    "collage_CyiUKz"
+  ]
+}

@@ -1,0 +1,131 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "custom_liquid_d4mYdV": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div class=\"custom-read-more\">\n  <p class=\"short-text\">\n    Move through distinguished settings in this antique pewter marvel, featuring precise pleated stitchwork...\n  </p>\n\n  <p class=\"full-text\" style=\"display: none;\">\n    Move through distinguished settings in this antique pewter marvel, featuring precise pleated stitchwork, ILLIYEEN Logo embroidery, and ILLIYEEN Logo-engraved buttons. Superior fine wool suiting creates a structured, wrinkle-resistant drape for the discerning wearer.\n\n    <br><br>\n\n    The Ambassador Collection reflects the pinnacle of material sophistication through timeless designs crafted for the selected few.\n  </p>\n\n  <button onclick=\"toggleReadMore(this)\" class=\"read-more-btn\">\n    Read more\n  </button>\n</div>\n\n<script>\nfunction toggleReadMore(btn) {\n  const container = btn.parentElement;\n  const shortText = container.querySelector('.short-text');\n  const fullText = container.querySelector('.full-text');\n\n  if (fullText.style.display === \"none\") {\n    fullText.style.display = \"block\";\n    shortText.style.display = \"none\";\n    btn.innerText = \"Read less\";\n  } else {\n    fullText.style.display = \"none\";\n    shortText.style.display = \"block\";\n    btn.innerText = \"Read more\";\n  }\n}\n</script>\n\n\n\n\n\n\n\n\n\n<style>\n  .hide-media{\n    display:none;\n    width:0\n  }\n</style>\n<script>\n\n  const handle = \"products/\" + \"{{ product.handle }}\" + \".js\";\n\nfetch(window.Shopify.routes.root + handle)\n  .then(response => response.json())\n  .then(product => {\n    const optionsToWatch = \"{{settings.media_grouping_option}}\".split(\",\");\n    const colorOption = product.options.find(option => optionsToWatch.includes(option.name))|| null;\n    if (!colorOption) {\n      console.log(\"No color options available for this product.\");\n      return;\n    }\n    // Retrieve color values\n    const colorValues = colorOption.values;\n    // Build an object to store the starting image positions for each color\n    const colorImagePositions = {};\n    \n    colorValues.forEach(color => {\n      // Find the first variant of this color and get its featured image position\n      const variant = product.variants.find(variant => variant.options[colorOption.position - 1] === color);\n      \n      if (variant && variant.featured_media) {\n        colorImagePositions[color] = variant.featured_media.position;\n      }\n    });    \n    // Sort colors based on their starting positions to calculate image ranges\n    const sortedColors = Object.entries(colorImagePositions).sort((a, b) => a[1] - b[1]);\n    // Calculate ranges and log the result\n    const colorImageRanges = {};\n    sortedColors.forEach((color, index) => {\n      const colorName = color[0];\n      const startPos = color[1];\n      const endPos = sortedColors[index + 1] ? sortedColors[index + 1][1] : null;\n      \n      colorImageRanges[colorName] = endPos ? [startPos, endPos] : [startPos];\n    });\n    // Build an object to store image IDs grouped by color based on colorImageRanges\n    const colorImageIDs = {};\n    Object.entries(colorImageRanges).forEach(([color, range]) => {\n      const startPos = range[0];\n      const endPos = range[1] || product.media.length +1; // If no end, assume range goes to the end of the images\n      // Find all images within the range for this color\n      const imageIDs = product.media\n        .filter((media, index) => {\n          const imagePosition = index + 1; // Adjust index to be position-based\n          return imagePosition >= startPos && imagePosition < endPos;\n        })\n        .map(media => media.id); // Store the image ID\n\n      colorImageIDs[color] = imageIDs;\n    });\n    const mediaGallery = document.querySelector('media-gallery');\n    const productSection = document.querySelector(\".product-variant-id\")\n    const sectionID = \"{{ section.id }}\"\n    // Iterate over colorImageIDs to apply data-media-group based on the color ranges\n    Object.entries(colorImageIDs).forEach(([color, imageIDs]) => {\n      imageIDs.forEach(mediaID => {\n        // Construct the selector for each media item using sectionID and media ID\n        const selector = `[data-media-id=\"${sectionID}-${mediaID}\"], [data-target=\"${sectionID}-${mediaID}\"]`;\n        // Find the image <li> and add the data-media-group attribute with the color\n        const mediaItems = mediaGallery.querySelectorAll(`li${selector}`);\n        mediaItems.forEach(mediaItem=>{\n          mediaItem.setAttribute('data-media-group', color);\n        })\n      });\n    });\n  const showVariantImage = () => {\n    const variantSelects = document.querySelector('variant-selects');\n    // Get the currently selected color\n    let currentValues = Array.from(\n      variantSelects.querySelectorAll('select option[selected], fieldset input:checked')\n    ).map(el => el.value);\n    \n    let selectedColor = currentValues.find(value => colorImageRanges.hasOwnProperty(value));\n  \n    // Show/Hide images based on selected color\n    mediaGallery.querySelectorAll('ul li[data-media-group]').forEach((mediaItem, index) => {\n      if (mediaItem.getAttribute('data-media-group') === selectedColor) {\n        mediaItem.classList.remove('hide-media');\n      } else {\n        mediaItem.classList.add('hide-media');\n      }\n    });\n  \n    // Reinitialize the slider if needed\n    mediaGallery.querySelectorAll('slider-component').forEach(slider => {\n      slider.initPages();\n    });\n  }\n    showVariantImage() \n    // Event listener to show/hide images based on the selected color\n    productSection.addEventListener('change', showVariantImage); \n  })\n  .catch(error => console.error(\"Error fetching product data:\", error));\n</script>"
+          }
+        },
+        "description": {
+          "type": "description",
+          "disabled": true,
+          "settings": {}
+        },
+        "collapsible_tab_fJkgUY": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Product Details",
+            "icon": "question_mark",
+            "content": "{{ product.description }}",
+            "page": ""
+          }
+        },
+        "share": {
+          "type": "share",
+          "disabled": true,
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "price",
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "custom_liquid_d4mYdV",
+        "description",
+        "collapsible_tab_fJkgUY",
+        "share"
+      ],
+      "custom_css": [
+        ".custom-read-more p {font-size: 14px; line-height: 1.6;}",
+        ".read-more-btn {margin-top: 8px; background: none; border: none; color: #000; font-weight: 600; cursor: pointer; text-decoration: underline;}"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "thumbnail_slider",
+        "mobile_thumbnails": "show",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 12
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "You may also like",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    }
+  },
+  "order": [
+    "main",
+    "related-products"
+  ]
+}
