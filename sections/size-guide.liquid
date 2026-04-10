@@ -1,0 +1,863 @@
+{%- liquid
+  assign first_chart = section.blocks.first
+  assign resolved_store_name = section.settings.store_name | strip
+  if resolved_store_name == blank
+    assign resolved_store_name = shop.name
+  endif
+-%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  .size-guide-{{ section.id }} {
+    --size-guide-pill-bg: rgb(var(--color-background));
+    --size-guide-pill-border: rgba(var(--color-foreground), 0.14);
+    --size-guide-pill-text: rgb(var(--color-foreground));
+    --size-guide-pill-muted: rgba(var(--color-foreground), 0.68);
+    --size-guide-pill-active-bg: rgb(var(--color-foreground));
+    --size-guide-pill-active-text: rgb(var(--color-background));
+    --size-guide-surface: rgba(var(--color-foreground), 0.04);
+    --size-guide-table-head: rgb(var(--color-foreground));
+    --size-guide-table-head-text: rgb(var(--color-background));
+    --size-guide-table-stripe: rgba(var(--color-foreground), 0.06);
+    --size-guide-table-border: rgba(var(--color-foreground), 0.08);
+  }
+
+  .size-guide-{{ section.id }} .size-guide__shell {
+    border-radius: 2.4rem;
+    padding: 2.4rem 0 3.2rem;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__header-band {
+    background: linear-gradient(180deg, rgba(var(--color-foreground), 0.05), rgba(var(--color-foreground), 0.025));
+    border-radius: 2rem;
+    margin-bottom: 2.4rem;
+    padding: 2rem 2.4rem;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__title {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    margin: 0;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__title .svg-wrapper {
+    align-items: center;
+    display: inline-flex;
+    height: 3.2rem;
+    justify-content: center;
+    width: 3.2rem;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__title .svg-wrapper svg {
+    height: 100%;
+    width: 100%;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__intro {
+    margin-top: 1.2rem;
+    max-width: 72rem;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__group {
+    margin-top: 2.4rem;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__group-label {
+    color: var(--size-guide-pill-muted);
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin-bottom: 1.2rem;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__pill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__pill {
+    appearance: none;
+    background: var(--size-guide-pill-bg);
+    border: 0.1rem solid var(--size-guide-pill-border);
+    border-radius: 999px;
+    color: var(--size-guide-pill-text);
+    cursor: pointer;
+    font: inherit;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    margin: 0;
+    min-height: 4.6rem;
+    padding: 1.2rem 1.8rem;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__pill:hover,
+  .size-guide-{{ section.id }} .size-guide__pill:focus-visible {
+    border-color: rgba(var(--color-foreground), 0.3);
+    outline: none;
+    transform: translateY(-1px);
+  }
+
+  .size-guide-{{ section.id }} .size-guide__pill.is-active {
+    background: var(--size-guide-pill-active-bg);
+    border-color: var(--size-guide-pill-active-bg);
+    color: var(--size-guide-pill-active-text);
+  }
+
+  .size-guide-{{ section.id }} .size-guide__content {
+    margin-top: 3.2rem;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__subheading {
+    margin: 0;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__description,
+  .size-guide-{{ section.id }} .size-guide__chart-text,
+  .size-guide-{{ section.id }} .size-guide__footnote {
+    color: var(--size-guide-pill-muted);
+    margin-top: 1.2rem;
+    max-width: 78rem;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__selectors {
+    align-items: end;
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 3.2rem;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__unit-toggle {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__unit-toggle .size-guide__pill {
+    border-radius: 1.2rem;
+    min-width: 7.2rem;
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__table-wrap {
+    background: var(--size-guide-surface);
+    border-radius: 1.8rem;
+    margin-top: 2.4rem;
+    overflow: hidden;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__table-title {
+    background: var(--size-guide-table-head);
+    color: var(--size-guide-table-head-text);
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0;
+    padding: 1.6rem 2rem;
+    text-align: center;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__table-scroll {
+    overflow-x: auto;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__table {
+    border-collapse: collapse;
+    min-width: 100%;
+    width: max-content;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__table th,
+  .size-guide-{{ section.id }} .size-guide__table td {
+    border: 0.1rem solid var(--size-guide-table-border);
+    padding: 1.4rem 1.6rem;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__table thead th {
+    background: rgba(var(--color-foreground), 0.18);
+    font-weight: 700;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__table thead th:first-child,
+  .size-guide-{{ section.id }} .size-guide__table tbody th {
+    min-width: 20rem;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__table tbody tr:nth-child(even) {
+    background: var(--size-guide-table-stripe);
+  }
+
+  .size-guide-{{ section.id }} .size-guide__table tbody th {
+    font-weight: 600;
+  }
+
+  .size-guide-{{ section.id }} .size-guide__empty {
+    background: rgba(var(--color-foreground), 0.04);
+    border: 0.1rem dashed rgba(var(--color-foreground), 0.2);
+    border-radius: 1.8rem;
+    color: var(--size-guide-pill-muted);
+    margin-top: 2rem;
+    padding: 2rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+
+    .size-guide-{{ section.id }} .size-guide__shell {
+      padding: 3.2rem 0 4rem;
+    }
+
+    .size-guide-{{ section.id }} .size-guide__header-band {
+      padding: 2.8rem 3.2rem;
+    }
+
+    .size-guide-{{ section.id }} .size-guide__selectors {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+  }
+{%- endstyle -%}
+
+<section class="size-guide-{{ section.id }} color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+    <div
+      class="size-guide__shell"
+      data-size-guide-section
+      data-default-note="{{ section.settings.default_note | escape }}"
+      data-measurement-heading="{{ section.settings.measurement_heading | escape }}"
+    >
+      {%- if section.blocks.size > 0 -%}
+        <div class="size-guide__header-band">
+          <h2 class="size-guide__title {{ section.settings.heading_size }}">
+            <span class="svg-wrapper">{{ 'icon-ruler.svg' | inline_asset_content }}</span>
+            <span>
+              {{- resolved_store_name }}
+              {{ section.settings.heading_label -}}
+            </span>
+            <span>-</span>
+            <span data-size-guide-heading-category>{{ first_chart.settings.core_category | escape }}</span>
+          </h2>
+          {%- if section.settings.intro_text != blank -%}
+            <div class="size-guide__intro rte">{{ section.settings.intro_text }}</div>
+          {%- endif -%}
+        </div>
+
+        <div class="size-guide__group">
+          <span class="size-guide__group-label">{{ section.settings.category_label }}</span>
+          <div class="size-guide__pill-list" data-size-guide-categories></div>
+        </div>
+
+        <div class="size-guide__group">
+          <span class="size-guide__group-label">{{ section.settings.subcategory_label }}</span>
+          <div class="size-guide__pill-list" data-size-guide-subcategories></div>
+        </div>
+
+        <div class="size-guide__content">
+          <h3 class="size-guide__subheading {{ section.settings.subheading_size }}" data-size-guide-subheading>
+            {{ first_chart.settings.sub_category_title | escape }}
+          </h3>
+          <div class="size-guide__description rte" data-size-guide-subtext>
+            {%- if first_chart.settings.sub_category_text != blank -%}
+              <p>{{ first_chart.settings.sub_category_text | escape }}</p>
+            {%- endif -%}
+          </div>
+
+          <div class="size-guide__selectors">
+            <div class="size-guide__group">
+              <span class="size-guide__group-label">{{ section.settings.chart_label }}</span>
+              <div class="size-guide__pill-list" data-size-guide-charts></div>
+            </div>
+
+            <div class="size-guide__group">
+              <span class="size-guide__group-label">{{ section.settings.unit_label }}</span>
+              <div class="size-guide__unit-toggle" data-size-guide-units></div>
+            </div>
+          </div>
+
+          <div class="size-guide__chart-text rte" data-size-guide-chart-text>
+            {%- if first_chart.settings.chart_text != blank -%}
+              <p>{{ first_chart.settings.chart_text | escape }}</p>
+            {%- endif -%}
+          </div>
+
+          <div class="size-guide__table-wrap">
+            <p class="size-guide__table-title" data-size-guide-table-title>
+              {{ first_chart.settings.table_title | escape }}
+            </p>
+            <div class="size-guide__table-scroll" data-size-guide-table></div>
+          </div>
+
+          <div class="size-guide__footnote rte" data-size-guide-footnote>
+            {%- if first_chart.settings.footnote != blank -%}
+              <p>{{ first_chart.settings.footnote | escape }}</p>
+            {%- elsif section.settings.default_note != blank -%}
+              <p>{{ section.settings.default_note | escape }}</p>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <script type="application/json" data-size-guide-data>
+          [
+            {%- for block in section.blocks -%}
+              {
+                "id": {{ block.id | json }},
+                "category": {{ block.settings.core_category | strip | json }},
+                "subcategory": {{ block.settings.sub_category | strip | json }},
+                "subcategory_title": {{ block.settings.sub_category_title | strip | json }},
+                "subcategory_text": {{ block.settings.sub_category_text | strip | json }},
+                "chart": {{ block.settings.chart_option | strip | json }},
+                "chart_text": {{ block.settings.chart_text | strip | json }},
+                "unit": {{ block.settings.unit | strip | upcase | json }},
+                "table_title": {{ block.settings.table_title | strip | json }},
+                "size_labels": {{ block.settings.size_labels | strip | json }},
+                "measurement_rows": {{ block.settings.measurement_rows | strip | json }},
+                "footnote": {{ block.settings.footnote | strip | json }}
+              }{%- unless forloop.last -%},{%- endunless -%}
+            {%- endfor -%}
+          ]
+        </script>
+      {%- else -%}
+        <div class="size-guide__empty">
+          Add `Size chart` blocks to build the category, sub-category, fit, and unit combinations for this section.
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{%- if section.blocks.size > 0 -%}
+  <script>
+    (() => {
+      if (window.sizeGuideSectionInitializer) {
+        window.sizeGuideSectionInitializer();
+        return;
+      }
+
+      const escapeHtml = (value) =>
+        String(value ?? '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+
+      const uniqueValues = (items, key) => {
+        const seen = new Set();
+        const values = [];
+
+        items.forEach((item) => {
+          const value = (item[key] || '').trim();
+          if (!value || seen.has(value)) return;
+          seen.add(value);
+          values.push(value);
+        });
+
+        return values;
+      };
+
+      const parseSizeLabels = (value) =>
+        String(value || '')
+          .split(/[,|]/)
+          .map((item) => item.trim())
+          .filter(Boolean);
+
+      const parseRows = (value) =>
+        String(value || '')
+          .split(/\r?\n/)
+          .map((row) => row.trim())
+          .filter(Boolean)
+          .map((row) => row.split('|').map((cell) => cell.trim()));
+
+      const buildTableMarkup = (chart, measurementHeading) => {
+        const headings = parseSizeLabels(chart.size_labels);
+        const rows = parseRows(chart.measurement_rows);
+
+        if (!headings.length || !rows.length) {
+          return `
+            <div class="size-guide__empty">
+              Add size labels and measurement rows for this chart block to show the table.
+            </div>
+          `;
+        }
+
+        const headMarkup = headings.map((heading) => `<th scope="col">${escapeHtml(heading)}</th>`).join('');
+        const bodyMarkup = rows
+          .map((row) => {
+            const label = row[0] || '';
+            const values = headings.map((_, index) => `<td>${escapeHtml(row[index + 1] || '')}</td>`).join('');
+
+            return `
+              <tr>
+                <th scope="row">${escapeHtml(label)}</th>
+                ${values}
+              </tr>
+            `;
+          })
+          .join('');
+
+        return `
+          <table class="size-guide__table">
+            <thead>
+              <tr>
+                <th scope="col">${escapeHtml(measurementHeading)}</th>
+                ${headMarkup}
+              </tr>
+            </thead>
+            <tbody>
+              ${bodyMarkup}
+            </tbody>
+          </table>
+        `;
+      };
+
+      const setupSection = (section) => {
+        if (section.dataset.sizeGuideReady === 'true') {
+          return;
+        }
+
+        const dataNode = section.querySelector('[data-size-guide-data]');
+        if (!dataNode) return;
+
+        let charts = [];
+
+        try {
+          charts = JSON.parse(dataNode.textContent);
+        } catch (error) {
+          console.error('Size guide data could not be parsed.', error);
+          return;
+        }
+
+        if (!charts.length) return;
+
+        const nodes = {
+          headingCategory: section.querySelector('[data-size-guide-heading-category]'),
+          categories: section.querySelector('[data-size-guide-categories]'),
+          subcategories: section.querySelector('[data-size-guide-subcategories]'),
+          subheading: section.querySelector('[data-size-guide-subheading]'),
+          subtext: section.querySelector('[data-size-guide-subtext]'),
+          charts: section.querySelector('[data-size-guide-charts]'),
+          units: section.querySelector('[data-size-guide-units]'),
+          chartText: section.querySelector('[data-size-guide-chart-text]'),
+          tableTitle: section.querySelector('[data-size-guide-table-title]'),
+          table: section.querySelector('[data-size-guide-table]'),
+          footnote: section.querySelector('[data-size-guide-footnote]'),
+        };
+
+        const measurementHeading = section.dataset.measurementHeading || 'Measurement Points';
+        const defaultNote = section.dataset.defaultNote || '';
+        const state = {
+          category: charts[0].category,
+          subcategory: charts[0].subcategory,
+          chart: charts[0].chart,
+          unit: charts[0].unit,
+        };
+
+        const createButton = (label, active, onClick) => {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = `size-guide__pill${active ? ' is-active' : ''}`;
+          button.textContent = label;
+          button.addEventListener('click', onClick);
+          return button;
+        };
+
+        const renderButtons = (container, labels, activeLabel, onSelect) => {
+          container.innerHTML = '';
+          labels.forEach((label) => {
+            container.appendChild(
+              createButton(label, label === activeLabel, () => {
+                onSelect(label);
+                render();
+              })
+            );
+          });
+        };
+
+        const getCategoryCharts = () => charts.filter((item) => item.category === state.category);
+        const getSubcategoryCharts = () => getCategoryCharts().filter((item) => item.subcategory === state.subcategory);
+        const getChartOptions = () => getSubcategoryCharts().filter((item) => item.chart === state.chart);
+
+        const ensureState = () => {
+          const categoryCharts = getCategoryCharts();
+          if (!categoryCharts.length) {
+            state.category = charts[0].category;
+          }
+
+          const availableSubcategories = uniqueValues(getCategoryCharts(), 'subcategory');
+          if (!availableSubcategories.includes(state.subcategory)) {
+            state.subcategory = availableSubcategories[0] || '';
+          }
+
+          const availableCharts = uniqueValues(getSubcategoryCharts(), 'chart');
+          if (!availableCharts.includes(state.chart)) {
+            state.chart = availableCharts[0] || '';
+          }
+
+          const availableUnits = uniqueValues(getChartOptions(), 'unit');
+          if (!availableUnits.includes(state.unit)) {
+            state.unit = availableUnits[0] || '';
+          }
+        };
+
+        const render = () => {
+          ensureState();
+
+          const activeChart =
+            charts.find(
+              (item) =>
+                item.category === state.category &&
+                item.subcategory === state.subcategory &&
+                item.chart === state.chart &&
+                item.unit === state.unit
+            ) || charts[0];
+
+          const availableCategories = uniqueValues(charts, 'category');
+          const availableSubcategories = uniqueValues(getCategoryCharts(), 'subcategory');
+          const availableCharts = uniqueValues(getSubcategoryCharts(), 'chart');
+          const availableUnits = uniqueValues(getChartOptions(), 'unit');
+
+          if (nodes.headingCategory) {
+            nodes.headingCategory.textContent = state.category;
+          }
+
+          renderButtons(nodes.categories, availableCategories, state.category, (label) => {
+            state.category = label;
+          });
+
+          renderButtons(nodes.subcategories, availableSubcategories, state.subcategory, (label) => {
+            state.subcategory = label;
+          });
+
+          renderButtons(nodes.charts, availableCharts, state.chart, (label) => {
+            state.chart = label;
+          });
+
+          renderButtons(nodes.units, availableUnits, state.unit, (label) => {
+            state.unit = label;
+          });
+
+          if (nodes.subheading) {
+            nodes.subheading.textContent = activeChart.subcategory_title || state.subcategory;
+          }
+
+          if (nodes.subtext) {
+            nodes.subtext.innerHTML = activeChart.subcategory_text
+              ? `<p>${escapeHtml(activeChart.subcategory_text)}</p>`
+              : '';
+          }
+
+          if (nodes.chartText) {
+            nodes.chartText.innerHTML = activeChart.chart_text ? `<p>${escapeHtml(activeChart.chart_text)}</p>` : '';
+          }
+
+          if (nodes.tableTitle) {
+            nodes.tableTitle.textContent = activeChart.table_title || `${state.subcategory} Size Guide`;
+          }
+
+          if (nodes.table) {
+            nodes.table.innerHTML = buildTableMarkup(activeChart, measurementHeading);
+          }
+
+          if (nodes.footnote) {
+            const note = activeChart.footnote || defaultNote;
+            nodes.footnote.innerHTML = note ? `<p>${escapeHtml(note)}</p>` : '';
+          }
+        };
+
+        render();
+        section.dataset.sizeGuideReady = 'true';
+      };
+
+      window.sizeGuideSectionInitializer = (root = document) => {
+        const sections = root.querySelectorAll('[data-size-guide-section]');
+        sections.forEach(setupSection);
+      };
+
+      window.sizeGuideSectionInitializer();
+
+      document.addEventListener('shopify:section:load', (event) => {
+        window.sizeGuideSectionInitializer(event.target);
+      });
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Size Guide",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 50,
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "store_name",
+      "label": "Store name override",
+      "info": "Leave blank to use the shop name."
+    },
+    {
+      "type": "text",
+      "id": "heading_label",
+      "label": "Heading label",
+      "default": "Size Guide"
+    },
+    {
+      "type": "richtext",
+      "id": "intro_text",
+      "label": "Intro text",
+      "default": "<p>Help shoppers find the right fit by switching between category, sub-category, fit, and unit options.</p>"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "default": "h1",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Small"
+        },
+        {
+          "value": "h1",
+          "label": "Medium"
+        },
+        {
+          "value": "h0",
+          "label": "Large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "subheading_size",
+      "label": "Sub-category title size",
+      "default": "h1",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Small"
+        },
+        {
+          "value": "h1",
+          "label": "Medium"
+        },
+        {
+          "value": "h0",
+          "label": "Large"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "category_label",
+      "label": "Category label",
+      "default": "Core category"
+    },
+    {
+      "type": "text",
+      "id": "subcategory_label",
+      "label": "Sub-category label",
+      "default": "Sub-category"
+    },
+    {
+      "type": "text",
+      "id": "chart_label",
+      "label": "Chart option label",
+      "default": "Select style fit"
+    },
+    {
+      "type": "text",
+      "id": "unit_label",
+      "label": "Unit label",
+      "default": "Measurement unit"
+    },
+    {
+      "type": "text",
+      "id": "measurement_heading",
+      "label": "Table first column heading",
+      "default": "Measurement Points"
+    },
+    {
+      "type": "textarea",
+      "id": "default_note",
+      "label": "Default note",
+      "default": "Measurements may vary slightly due to fabric and production tolerance."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "chart",
+      "name": "Size chart",
+      "settings": [
+        {
+          "type": "text",
+          "id": "core_category",
+          "label": "Core category",
+          "default": "Men"
+        },
+        {
+          "type": "text",
+          "id": "sub_category",
+          "label": "Sub-category",
+          "default": "Shirts"
+        },
+        {
+          "type": "text",
+          "id": "sub_category_title",
+          "label": "Sub-category title",
+          "default": "MEN'S SHIRT"
+        },
+        {
+          "type": "textarea",
+          "id": "sub_category_text",
+          "label": "Sub-category text",
+          "default": "Use this chart to choose the most comfortable size for this item group."
+        },
+        {
+          "type": "text",
+          "id": "chart_option",
+          "label": "Chart option",
+          "default": "Regular Fit"
+        },
+        {
+          "type": "textarea",
+          "id": "chart_text",
+          "label": "Chart text",
+          "default": "Choose the fit profile that matches the product you are shopping for."
+        },
+        {
+          "type": "select",
+          "id": "unit",
+          "label": "Measurement unit",
+          "default": "IN",
+          "options": [
+            {
+              "value": "IN",
+              "label": "IN"
+            },
+            {
+              "value": "CM",
+              "label": "CM"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "table_title",
+          "label": "Table title",
+          "default": "Size Guide for - Shirts"
+        },
+        {
+          "type": "textarea",
+          "id": "size_labels",
+          "label": "Size labels",
+          "info": "Separate values with commas or pipes. Example: XS, S, M, L, XL",
+          "default": "XS, S, M, L, XL"
+        },
+        {
+          "type": "textarea",
+          "id": "measurement_rows",
+          "label": "Measurement rows",
+          "info": "One row per line. Use the format Label|Value 1|Value 2|Value 3",
+          "default": "COLLAR|14.5|15|16|17|17.5\n1/2 CHEST|18|19.75|21.5|23|24.5\nBODY LENGTH|29.25|30|30.75|31.5|32.25"
+        },
+        {
+          "type": "textarea",
+          "id": "footnote",
+          "label": "Footnote",
+          "default": "Measurements may vary by ±0.5 inch due to material properties."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Size Guide",
+      "blocks": [
+        {
+          "type": "chart",
+          "settings": {
+            "core_category": "Men",
+            "sub_category": "Shirts",
+            "sub_category_title": "MEN'S SHIRT",
+            "chart_option": "Regular Fit",
+            "unit": "IN",
+            "table_title": "Size Guide for - Shirts",
+            "size_labels": "XS, S, M, L, XL, 2XL",
+            "measurement_rows": "COLLAR|14.5|15|16|17|17.5|18\n1/2 CHEST|18|19.75|21.5|23|24.5|26.25\nBODY LENGTH|29.25|30|30.75|31.5|32.25|32.75"
+          }
+        },
+        {
+          "type": "chart",
+          "settings": {
+            "core_category": "Men",
+            "sub_category": "Shirts",
+            "sub_category_title": "MEN'S SHIRT",
+            "chart_option": "Regular Fit",
+            "unit": "CM",
+            "table_title": "Size Guide for - Shirts",
+            "size_labels": "XS, S, M, L, XL, 2XL",
+            "measurement_rows": "COLLAR|36.8|38.1|40.6|43.2|44.5|45.7\n1/2 CHEST|45.7|50.2|54.6|58.4|62.2|66.7\nBODY LENGTH|74.3|76.2|78.1|80|81.9|83.2"
+          }
+        },
+        {
+          "type": "chart",
+          "settings": {
+            "core_category": "Men",
+            "sub_category": "Shirts",
+            "sub_category_title": "MEN'S SHIRT",
+            "chart_option": "Slim Fit",
+            "unit": "IN",
+            "table_title": "Slim Fit Size Guide for - Shirts",
+            "size_labels": "XS, S, M, L, XL, 2XL",
+            "measurement_rows": "COLLAR|14|14.5|15.5|16.5|17|17.5\n1/2 CHEST|17.5|19|20.5|22|23.5|25\nBODY LENGTH|28.75|29.5|30.25|31|31.75|32.5"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
