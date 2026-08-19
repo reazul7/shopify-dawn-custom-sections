@@ -235,12 +235,16 @@
 <section class="size-guide-{{ section.id }} color-{{ section.settings.color_scheme }} gradient">
   <div class="page-width section-{{ section.id }}-padding">
     <div
-      class="size-guide__shell"
+      {% comment %} class="size-guide__shell" {% endcomment %}
       data-size-guide-section
       data-default-note="{{ section.settings.default_note | escape }}"
       data-measurement-heading="{{ section.settings.measurement_heading | escape }}"
     >
       {%- if section.blocks.size > 0 -%}
+        {% comment %} <div class="size-guide__group"> {% endcomment %}
+        <div class="size-guide__pill-list" data-size-guide-categories></div>
+        {% comment %} </div> {% endcomment %}
+
         <div class="size-guide__header-band">
           <h2 class="size-guide__title {{ section.settings.heading_size }}">
             <span class="svg-wrapper">{{ 'icon-ruler.svg' | inline_asset_content }}</span>
@@ -254,11 +258,6 @@
           {%- if section.settings.intro_text != blank -%}
             <div class="size-guide__intro rte">{{ section.settings.intro_text }}</div>
           {%- endif -%}
-        </div>
-
-        <div class="size-guide__group">
-          <span class="size-guide__group-label">{{ section.settings.category_label }}</span>
-          <div class="size-guide__pill-list" data-size-guide-categories></div>
         </div>
 
         <div class="size-guide__group">
@@ -573,7 +572,7 @@
           }
 
           if (nodes.footnote) {
-            const note = activeChart.footnote || defaultNote;
+            const note = activeChart.footnote;
             nodes.footnote.innerHTML = note ? `<p>${escapeHtml(note)}</p>` : '';
           }
         };

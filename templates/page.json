@@ -20,6 +20,22 @@
     "size_guide_W3PB9n": {
       "type": "size-guide",
       "blocks": {
+        "chart_mxeJx3": {
+          "type": "chart",
+          "settings": {
+            "core_category": "Men",
+            "sub_category": "Shirts",
+            "sub_category_title": "MEN'S SHIRT",
+            "sub_category_text": "Use this chart to choose the most comfortable size for this item group.",
+            "chart_option": "Regular Fit",
+            "chart_text": "Choose the fit profile that matches the product you are shopping for.",
+            "unit": "IN",
+            "table_title": "Size Guide for - Shirts",
+            "size_labels": "XS, S, M, L, XL",
+            "measurement_rows": "COLLAR|14.5|15|16|17|17.5\n1/2 CHEST|18|19.75|21.5|23|24.5\nBODY LENGTH|29.25|30|30.75|31.5|32.25",
+            "footnote": "Measurements may vary by ±0.5 inch due to material properties."
+          }
+        },
         "chart_AJzkMf": {
           "type": "chart",
           "name": "Accessories Ring Chart",
@@ -34,7 +50,7 @@
             "table_title": "Size Guide for - Ring",
             "size_labels": "8,9,10,11,12",
             "measurement_rows": "Diameter|1.82|1.90|1.98|2.06|2.14",
-            "footnote": "."
+            "footnote": ""
           }
         },
         "chart_LqCPpb": {
@@ -51,7 +67,7 @@
             "table_title": "Size Guide for - Prayer Cap",
             "size_labels": "XS, S, M, L, XL, 2XL",
             "measurement_rows": "HEAD SIZE|21|21.5|22|22.5|23|23.5",
-            "footnote": "."
+            "footnote": ""
           }
         },
         "chart_JAAeE7": {
@@ -68,7 +84,7 @@
             "table_title": "Size Guide for - Prayer Cap",
             "size_labels": "XS, S, M, L, XL, 2XL",
             "measurement_rows": "HEAD SIZE|53.30|54.60|55.90|57.10|58.40|59.70",
-            "footnote": "."
+            "footnote": ""
           }
         },
         "chart_Ey3eyV": {
@@ -85,7 +101,7 @@
             "table_title": "Size Guide for - Kabli",
             "size_labels": "XS, S, M, L, XL, 2XL, 3XL",
             "measurement_rows": "1/2 CHEST|19.75|20.5|21.75|22.75|24|25.25|26.75\n BODY LENGTH|41.25|42|43.25|46.5|47.25|47.25|47.25\n Size Guide for Trousers\n WAIST RANGE|27 - 29|30 - 32|33 - 34|35 - 36|37-38|39-42|43-47\n FULL LENGTH|37.75|38.5|39.25|40|41|41.75|42.5\n FULL LEG OPENING|12.25|12.5|13|13.25|13.75|14|14.5",
-            "footnote": "."
+            "footnote": ""
           }
         },
         "chart_eryixb": {
@@ -102,7 +118,7 @@
             "table_title": "Size Guide for - Kabli",
             "size_labels": "XS, S, M, L, XL, 2XL, 3XL",
             "measurement_rows": "1/2 CHEST50|52.5|55|58|61|64|68\n BODY LENGTH|105|107|110|118|120|120|120\n Size Guide for Trousers\n WAIST RANGE|68.5 - 73.5|76 - 81|83 - 86|89 - 91.5|94 - 96.5|99 - 106.5|109-119.5\n FULL LENGTH|96|98|100|102|104|106|108\n FULL LEG OPENING|31|32|33|34|35|36|37",
-            "footnote": "."
+            "footnote": ""
           }
         },
         "chart_dAjUr4": {
@@ -119,7 +135,7 @@
             "table_title": "Size Guide for - Kabli",
             "size_labels": "XS, S, M, L, XL, 2XL, 3XL",
             "measurement_rows": "1/2 CHEST|19.75|20.5|21.75|22.75|24|25.25|26.75\n BODY LENGTH|41.25|42|43.25|46.5|47.25|47.25|47.25",
-            "footnote": "."
+            "footnote": ""
           }
         },
         "chart_pDqATD": {
@@ -136,7 +152,7 @@
             "table_title": "Size Guide for - Kabli",
             "size_labels": "XS, S, M, L, XL, 2XL, 3XL",
             "measurement_rows": "1/2 CHEST50|52.5|55|58|61|64|68\n BODY LENGTH|105|107|110|118|120|120|120\n Size Guide for Trousers\n WAIST RANGE|68.5 - 73.5|76 - 81|83 - 86|89 - 91.5|94 - 96.5|99 - 106.5|109-119.5\n FULL LENGTH|96|98|100|102|104|106|108\n FULL LEG OPENING|31|32|33|34|35|36|37",
-            "footnote": "."
+            "footnote": ""
           }
         },
         "chart_P6hkXN": {
@@ -153,7 +169,7 @@
             "table_title": "Size Guide for - Joggers And L-Chinos",
             "size_labels": "XS, S, M, L, XL, XXL",
             "measurement_rows": "Waist Range|27 - 29|30 - 32|33 - 34|35 - 36|37 - 38|39 - 42\n Full Length|37|37.5|38|38.75|39.5|39.75",
-            "footnote": "."
+            "footnote": ""
           }
         },
         "chart_pcc7hE": {
@@ -170,7 +186,7 @@
             "table_title": "Size Guide for - Joggers And L-Chinos",
             "size_labels": "XS, S, M, L, XL, XXL",
             "measurement_rows": "Waist Range(cm)|68.5 - 73.5|76 - 81|83 - 86|89 - 91.5|94 - 96.5|99 - 106.5\n Full Length|94|95.5|97|98.5|100|101",
-            "footnote": "."
+            "footnote": ""
           }
         },
         "chart_UNkEXL": {
@@ -187,7 +203,7 @@
             "table_title": "Size Guide for - Panjabi",
             "size_labels": "XS, S, M, L, XL, 2XL, 3XL",
             "measurement_rows": "1/2 CHEST|19.75|20.5|21.75|22.75|24|25.25|26.75\n BODY LENGTH|41.25|42|43.25|46.5|47.25|47.25|47.25",
-            "footnote": "."
+            "footnote": ""
           }
         },
         "chart_3M73cA": {
@@ -204,7 +220,7 @@
             "table_title": "Size Guide for - Panjabi",
             "size_labels": "XS, S, M, L, XL, 2XL, 3XL",
             "measurement_rows": "1/2 CHEST|50|52.5|55|58|61|64|68\n BODY LENGTH|105|107|110|118|120|120|120",
-            "footnote": "."
+            "footnote": ""
           }
         },
         "chart_HVM3LP": {
@@ -323,7 +339,7 @@
             "table_title": "Size Guide for - Abaya",
             "size_labels": "S, M, L, XL, XXL",
             "measurement_rows": "1/2 CHEST|20.50|21.50|22.50|23|24.50\nBODY LENGTH|52|54|56|58|59",
-            "footnote": "."
+            "footnote": ""
           }
         },
         "chart_wcQUTA": {
@@ -340,7 +356,7 @@
             "table_title": "Size Guide for - Abaya",
             "size_labels": "S, M, L, XL, XXL",
             "measurement_rows": "1/2 CHEST|52|54.50|57|58.50|62.25\nBODY LENGTH| 132|137.25|142.25|142.25|150",
-            "footnote": "."
+            "footnote": ""
           }
         },
         "chart_aBTQqc": {
@@ -357,7 +373,7 @@
             "table_title": "Size Guide for - Tops",
             "size_labels": "XS, S, M, L, XL, 2XL",
             "measurement_rows": "1/2 CHEST|49.50|52|54.50|57.25|59.75|62.25\nBODY LENGTH|101.50|104.25|106.75|109.25|111.75|111.75",
-            "footnote": "."
+            "footnote": ""
           }
         },
         "chart_nPRVfp": {
@@ -369,16 +385,17 @@
             "sub_category_title": "Women's Tops",
             "sub_category_text": "Use this chart to choose the most comfortable size for this item group.",
             "chart_option": "Regular Fit",
-            "chart_text": "Choose the fit profile that matches the product you are shopping for.",
+            "chart_text": "",
             "unit": "CM",
             "table_title": "Size Guide for - Tops",
             "size_labels": "XS, S, M, L, XL, 2XL",
             "measurement_rows": "1/2 CHEST|19.50|20.50|21.50|22.50|23.50|24.50\nBODY LENGTH|40|41|42|43|44|44",
-            "footnote": "."
+            "footnote": ""
           }
         }
       },
       "block_order": [
+        "chart_mxeJx3",
         "chart_AJzkMf",
         "chart_LqCPpb",
         "chart_JAAeE7",
